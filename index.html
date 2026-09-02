@@ -1,0 +1,1037 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Study Smart — States of Matter</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#0A1220;
+  --bg-panel:#101B32;
+  --bg-card:#152241;
+  --bg-card-hover:#1B2C52;
+  --border:#26314f;
+  --border-soft:#1d2843;
+  --text:#E7ECF7;
+  --text-dim:#8FA0C4;
+  --text-faint:#5A6789;
+  --solid:#60A5FA;
+  --liquid:#2DD4BF;
+  --gas:#FB923C;
+  --gold:#F2C14E;
+  --danger:#F87171;
+  --good:#4ADE80;
+  --radius:14px;
+  --shadow: 0 10px 30px rgba(0,0,0,0.35);
+}
+*{box-sizing:border-box;}
+html,body{margin:0;padding:0;}
+body{
+  background:
+    radial-gradient(circle at 15% 0%, rgba(96,165,250,0.10), transparent 40%),
+    radial-gradient(circle at 85% 10%, rgba(251,146,60,0.08), transparent 45%),
+    radial-gradient(circle at 50% 100%, rgba(45,212,191,0.06), transparent 50%),
+    var(--bg);
+  color:var(--text);
+  font-family:'Inter',sans-serif;
+  min-height:100vh;
+  line-height:1.5;
+}
+.wrap{max-width:1180px;margin:0 auto;padding:28px 20px 80px;}
+
+/* ---------- HEADER ---------- */
+header.top{
+  display:flex;align-items:center;justify-content:space-between;
+  gap:20px;flex-wrap:wrap;
+  padding-bottom:22px;margin-bottom:24px;
+  border-bottom:1px solid var(--border-soft);
+}
+.brand{display:flex;align-items:center;gap:14px;}
+.brand-mark{
+  width:46px;height:46px;border-radius:12px;position:relative;flex:none;
+  background:linear-gradient(145deg,var(--bg-card),var(--bg-panel));
+  border:1px solid var(--border);
+  overflow:hidden;
+}
+.brand-mark .p{position:absolute;border-radius:50%;}
+.brand-mark .p1{width:6px;height:6px;background:var(--solid);top:6px;left:6px;}
+.brand-mark .p2{width:6px;height:6px;background:var(--solid);top:6px;left:16px;}
+.brand-mark .p3{width:6px;height:6px;background:var(--liquid);bottom:9px;left:9px;animation:drift 3s ease-in-out infinite;}
+.brand-mark .p4{width:6px;height:6px;background:var(--liquid);bottom:9px;left:22px;animation:drift 3s ease-in-out infinite .4s;}
+.brand-mark .p5{width:5px;height:5px;background:var(--gas);top:14px;right:6px;animation:float 2.4s ease-in-out infinite;}
+.brand-mark .p6{width:5px;height:5px;background:var(--gas);bottom:6px;right:9px;animation:float 2.4s ease-in-out infinite .6s;}
+@keyframes drift{0%,100%{transform:translateX(0)}50%{transform:translateX(3px)}}
+@keyframes float{0%,100%{transform:translate(0,0)}50%{transform:translate(2px,-4px)}}
+.brand h1{
+  font-family:'Space Grotesk',sans-serif;
+  font-size:1.5rem;margin:0;font-weight:700;letter-spacing:-0.01em;
+}
+.brand h1 span{color:var(--gold);}
+.brand p{margin:2px 0 0;color:var(--text-dim);font-size:0.82rem;letter-spacing:.02em;}
+.tag{
+  font-family:'JetBrains Mono',monospace;font-size:.68rem;color:var(--text-faint);
+  border:1px solid var(--border);padding:4px 10px;border-radius:99px;white-space:nowrap;
+}
+
+/* ---------- NAV TABS ---------- */
+nav.tabs{
+  display:flex;gap:8px;flex-wrap:wrap;margin-bottom:26px;
+}
+nav.tabs button{
+  font-family:'Space Grotesk',sans-serif;
+  background:var(--bg-panel);border:1px solid var(--border);
+  color:var(--text-dim);padding:10px 16px;border-radius:10px;
+  font-size:.85rem;font-weight:600;cursor:pointer;letter-spacing:.01em;
+  display:flex;align-items:center;gap:8px;
+  transition:all .15s ease;
+}
+nav.tabs button .dot{width:7px;height:7px;border-radius:50%;background:var(--text-faint);transition:background .15s;}
+nav.tabs button:hover{color:var(--text);border-color:var(--border);background:var(--bg-card);}
+nav.tabs button.active{color:var(--bg);background:var(--gold);border-color:var(--gold);}
+nav.tabs button.active .dot{background:var(--bg);}
+
+section.panel{display:none;animation:fadein .25s ease;}
+section.panel.active{display:block;}
+@keyframes fadein{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
+
+h2.panel-title{
+  font-family:'Space Grotesk',sans-serif;font-size:1.35rem;margin:0 0 4px;font-weight:700;
+}
+p.panel-sub{color:var(--text-dim);font-size:.9rem;margin:0 0 22px;max-width:640px;}
+
+/* ---------- OVERVIEW ---------- */
+.grid-overview{
+  display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:14px;
+}
+.ov-card{
+  background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius);
+  padding:18px 18px 16px;position:relative;overflow:hidden;
+}
+.ov-card::before{
+  content:"";position:absolute;top:0;left:0;width:100%;height:3px;
+}
+.ov-card.solid::before{background:var(--solid);}
+.ov-card.liquid::before{background:var(--liquid);}
+.ov-card.gas::before{background:var(--gas);}
+.ov-card.imf::before{background:var(--gold);}
+.ov-card.laws::before{background:#C084FC;}
+.ov-card h3{
+  font-family:'Space Grotesk',sans-serif;margin:2px 0 10px;font-size:1rem;
+  display:flex;align-items:center;gap:8px;
+}
+.ov-card ul{margin:0;padding-left:18px;font-size:.85rem;color:var(--text-dim);}
+.ov-card ul li{margin-bottom:5px;}
+.ov-card ul li b{color:var(--text);font-weight:600;}
+.formula-box{
+  font-family:'JetBrains Mono',monospace;background:var(--bg-panel);
+  border:1px solid var(--border-soft);border-radius:8px;
+  padding:8px 10px;margin:8px 0;font-size:.82rem;color:var(--gold);
+  display:inline-block;
+}
+
+/* ---------- DIAGRAMS ---------- */
+.diag-grid{display:grid;grid-template-columns:1fr;gap:20px;}
+.diag-card{
+  background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius);
+  padding:20px;
+}
+.diag-card h3{font-family:'Space Grotesk',sans-serif;margin:0 0 4px;font-size:1.02rem;}
+.diag-card .hint{color:var(--text-dim);font-size:.82rem;margin:0 0 16px;}
+
+/* phase state switcher */
+.phase-switch{display:flex;gap:8px;margin-bottom:16px;}
+.phase-switch button{
+  flex:1;padding:9px;border-radius:9px;border:1px solid var(--border);
+  background:var(--bg-panel);color:var(--text-dim);font-weight:600;cursor:pointer;
+  font-family:'Space Grotesk',sans-serif;font-size:.82rem;transition:all .15s;
+}
+.phase-switch button.active[data-p="solid"]{background:rgba(96,165,250,.15);border-color:var(--solid);color:var(--solid);}
+.phase-switch button.active[data-p="liquid"]{background:rgba(45,212,191,.15);border-color:var(--liquid);color:var(--liquid);}
+.phase-switch button.active[data-p="gas"]{background:rgba(251,146,60,.15);border-color:var(--gas);color:var(--gas);}
+
+.stage{
+  height:220px;border-radius:10px;background:var(--bg-panel);border:1px solid var(--border-soft);
+  position:relative;overflow:hidden;
+}
+.particle{
+  position:absolute;width:14px;height:14px;border-radius:50%;
+  background:radial-gradient(circle at 30% 30%, #fff, var(--solid) 60%);
+  box-shadow:0 0 8px rgba(96,165,250,.5);
+}
+.phase-info{display:flex;gap:18px;margin-top:14px;flex-wrap:wrap;font-size:.8rem;color:var(--text-dim);}
+.phase-info b{color:var(--text);}
+
+/* gas law sliders */
+.law-row{display:flex;gap:20px;flex-wrap:wrap;align-items:flex-start;}
+.law-controls{flex:1;min-width:220px;}
+.slider-block{margin-bottom:16px;}
+.slider-block label{display:flex;justify-content:space-between;font-size:.82rem;color:var(--text-dim);margin-bottom:6px;}
+.slider-block label span{color:var(--gold);font-family:'JetBrains Mono',monospace;}
+input[type=range]{width:100%;accent-color:var(--gold);}
+.law-visual{flex:1;min-width:240px;}
+#pvCanvas{width:100%;height:220px;background:var(--bg-panel);border:1px solid var(--border-soft);border-radius:10px;}
+.readout{
+  font-family:'JetBrains Mono',monospace;font-size:.85rem;background:var(--bg-panel);
+  border:1px solid var(--border-soft);border-radius:8px;padding:10px 12px;color:var(--gold);margin-top:10px;
+}
+
+/* energy curve diagram */
+.energy-wrap{display:flex;gap:20px;flex-wrap:wrap;align-items:center;}
+#energyCanvas{width:100%;max-width:420px;height:220px;background:var(--bg-panel);border:1px solid var(--border-soft);border-radius:10px;}
+.energy-legend{font-size:.82rem;color:var(--text-dim);flex:1;min-width:200px;}
+.energy-legend div{margin-bottom:8px;display:flex;align-items:center;gap:8px;}
+.swatch{width:10px;height:10px;border-radius:3px;flex:none;}
+
+/* IMF table */
+table.imf{width:100%;border-collapse:collapse;font-size:.85rem;}
+table.imf th,table.imf td{padding:9px 10px;border-bottom:1px solid var(--border-soft);text-align:left;}
+table.imf th{color:var(--text-dim);font-weight:600;font-family:'Space Grotesk',sans-serif;font-size:.78rem;text-transform:uppercase;letter-spacing:.04em;}
+table.imf tr:hover td{background:var(--bg-card-hover);}
+
+/* ---------- MINI MAP ---------- */
+.map-layout{display:grid;grid-template-columns:280px 1fr;gap:18px;}
+@media(max-width:760px){.map-layout{grid-template-columns:1fr;}}
+.map-nodes{
+  background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius);
+  padding:16px;display:flex;flex-direction:column;gap:6px;
+}
+.map-nodes .grp-label{font-size:.72rem;text-transform:uppercase;letter-spacing:.06em;color:var(--text-faint);margin:10px 0 4px;}
+.map-nodes .grp-label:first-child{margin-top:0;}
+.map-node{
+  text-align:left;background:transparent;border:1px solid transparent;color:var(--text-dim);
+  padding:9px 10px;border-radius:8px;cursor:pointer;font-size:.86rem;font-family:'Inter',sans-serif;
+  display:flex;align-items:center;gap:8px;transition:all .15s;
+}
+.map-node .b{width:6px;height:6px;border-radius:50%;background:var(--text-faint);flex:none;}
+.map-node:hover{background:var(--bg-card-hover);color:var(--text);}
+.map-node.on{background:rgba(242,193,78,.12);border-color:var(--gold);color:var(--gold);}
+.map-node.on .b{background:var(--gold);}
+.map-display{
+  background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius);
+  padding:26px;min-height:340px;display:flex;flex-direction:column;justify-content:center;
+}
+.map-display .placeholder{color:var(--text-faint);text-align:center;font-size:.9rem;}
+.map-display h4{font-family:'Space Grotesk',sans-serif;font-size:1.15rem;margin:0 0 12px;color:var(--gold);}
+.map-display p{color:var(--text);font-size:.92rem;margin:0 0 10px;}
+.map-display .formula-box{margin-top:6px;}
+
+/* ---------- FLASHCARDS ---------- */
+.fc-toolbar{display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;flex-wrap:wrap;gap:10px;}
+.fc-progress{font-family:'JetBrains Mono',monospace;font-size:.8rem;color:var(--text-dim);}
+.fc-btns{display:flex;gap:8px;}
+.fc-btns button{
+  background:var(--bg-panel);border:1px solid var(--border);color:var(--text);
+  padding:8px 14px;border-radius:8px;cursor:pointer;font-size:.82rem;font-weight:600;
+  font-family:'Space Grotesk',sans-serif;
+}
+.fc-btns button:hover{background:var(--bg-card-hover);}
+.fc-btns button.gold{background:var(--gold);color:var(--bg);border-color:var(--gold);}
+.flashcard-stage{display:flex;justify-content:center;margin-bottom:16px;}
+.flashcard{
+  width:100%;max-width:520px;height:260px;perspective:1200px;cursor:pointer;
+}
+.flashcard-inner{
+  position:relative;width:100%;height:100%;transition:transform .5s;transform-style:preserve-3d;
+}
+.flashcard.flipped .flashcard-inner{transform:rotateY(180deg);}
+.fc-face{
+  position:absolute;inset:0;backface-visibility:hidden;border-radius:16px;
+  display:flex;align-items:center;justify-content:center;text-align:center;
+  padding:28px;border:1px solid var(--border);
+}
+.fc-front{background:linear-gradient(150deg,var(--bg-card),var(--bg-panel));}
+.fc-back{background:linear-gradient(150deg,#1B2C52,#152241);transform:rotateY(180deg);}
+.fc-face .lbl{position:absolute;top:14px;left:16px;font-family:'JetBrains Mono',monospace;font-size:.68rem;color:var(--text-faint);text-transform:uppercase;letter-spacing:.05em;}
+.fc-face .content{font-family:'Space Grotesk',sans-serif;font-size:1.08rem;font-weight:500;line-height:1.5;}
+.fc-back .content{font-family:'Inter',sans-serif;font-weight:400;font-size:.98rem;color:var(--text);}
+.fc-tap{position:absolute;bottom:14px;right:16px;font-size:.68rem;color:var(--text-faint);}
+.fc-deck-note{text-align:center;color:var(--text-faint);font-size:.78rem;margin-top:4px;}
+
+/* ---------- QUIZ ---------- */
+.quiz-toolbar{display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;flex-wrap:wrap;gap:12px;}
+.quiz-score{
+  font-family:'JetBrains Mono',monospace;font-size:.85rem;background:var(--bg-panel);
+  border:1px solid var(--border-soft);padding:8px 14px;border-radius:8px;color:var(--gold);
+}
+.quiz-list{display:flex;flex-direction:column;gap:14px;}
+.q-card{background:var(--bg-card);border:1px solid var(--border);border-radius:12px;padding:16px 18px;}
+.q-card .q-head{display:flex;gap:10px;margin-bottom:12px;}
+.q-num{font-family:'JetBrains Mono',monospace;font-size:.78rem;color:var(--gold);flex:none;padding-top:2px;}
+.q-text{font-size:.92rem;font-weight:500;}
+.q-opts{display:flex;flex-direction:column;gap:8px;margin-left:28px;}
+.q-opt{
+  display:flex;align-items:center;gap:10px;padding:9px 12px;border-radius:8px;
+  border:1px solid var(--border-soft);background:var(--bg-panel);cursor:pointer;font-size:.86rem;
+  transition:all .12s;
+}
+.q-opt:hover{background:var(--bg-card-hover);}
+.q-opt .mark{width:16px;height:16px;border-radius:50%;border:2px solid var(--text-faint);flex:none;}
+.q-opt.correct{border-color:var(--good);background:rgba(74,222,128,.1);}
+.q-opt.correct .mark{background:var(--good);border-color:var(--good);}
+.q-opt.wrong{border-color:var(--danger);background:rgba(248,113,113,.1);}
+.q-opt.wrong .mark{background:var(--danger);border-color:var(--danger);}
+.q-opt.disabled{cursor:default;}
+.quiz-footer{display:flex;justify-content:center;margin-top:22px;}
+.quiz-footer button{
+  background:var(--gold);color:var(--bg);border:none;padding:12px 26px;border-radius:10px;
+  font-weight:700;font-family:'Space Grotesk',sans-serif;cursor:pointer;font-size:.9rem;
+}
+
+/* ---------- FOOTER ---------- */
+footer{
+  margin-top:50px;padding-top:20px;border-top:1px solid var(--border-soft);
+  display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;
+  color:var(--text-faint);font-size:.78rem;
+}
+footer .credit{font-family:'JetBrains Mono',monospace;}
+footer .credit b{color:var(--text-dim);}
+
+@media (max-width:600px){
+  .brand h1{font-size:1.25rem;}
+  .law-row,.energy-wrap{flex-direction:column;}
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header class="top">
+    <div class="brand">
+      <div class="brand-mark">
+        <div class="p p1"></div><div class="p p2"></div>
+        <div class="p p3"></div><div class="p p4"></div>
+        <div class="p p5"></div><div class="p p6"></div>
+      </div>
+      <div>
+        <h1>Study <span>Smart</span></h1>
+        <p>Physical Pharmacy · States of Matter</p>
+      </div>
+    </div>
+    <div class="tag">solid → liquid → gas</div>
+  </header>
+
+  <nav class="tabs">
+    <button class="tab-btn active" data-tab="overview"><span class="dot"></span>Overview</button>
+    <button class="tab-btn" data-tab="diagrams"><span class="dot"></span>Diagrams</button>
+    <button class="tab-btn" data-tab="minimap"><span class="dot"></span>Mini Map</button>
+    <button class="tab-btn" data-tab="flashcards"><span class="dot"></span>Flashcards</button>
+    <button class="tab-btn" data-tab="quiz"><span class="dot"></span>Quiz Bank</button>
+  </nav>
+
+  <!-- ============ 1. OVERVIEW ============ -->
+  <section class="panel active" id="overview">
+    <h2 class="panel-title">Overview</h2>
+    <p class="panel-sub">Just the essentials — definitions, distinguishing properties, and the laws you need, no lecture filler.</p>
+
+    <div class="grid-overview">
+      <div class="ov-card solid">
+        <h3>🧊 Solid</h3>
+        <ul>
+          <li>Particles <b>tightly packed</b>, fixed positions — only vibrate.</li>
+          <li><b>Fixed shape & volume.</b> Very hard to compress.</li>
+          <li><b>Lowest</b> rate of diffusion.</li>
+          <li>e.g. ice, sugar, rock, wood.</li>
+        </ul>
+      </div>
+      <div class="ov-card liquid">
+        <h3>💧 Liquid</h3>
+        <ul>
+          <li>Particles less tightly packed than solids; can flow.</li>
+          <li><b>Fixed volume, no fixed shape</b> — takes container's shape.</li>
+          <li>Hard to compress; diffusion faster than solids.</li>
+          <li>e.g. water, milk, blood, coffee.</li>
+        </ul>
+      </div>
+      <div class="ov-card gas">
+        <h3>💨 Gas</h3>
+        <ul>
+          <li>Particles far apart, <b>negligible attraction</b>, move freely.</li>
+          <li><b>No fixed shape or volume.</b> Highest compressibility.</li>
+          <li>Highest diffusion rate & kinetic energy.</li>
+          <li>e.g. air, He, N₂, O₂, CO₂.</li>
+        </ul>
+      </div>
+      <div class="ov-card imf">
+        <h3>🔗 Binding Forces</h3>
+        <ul>
+          <li><b>Intramolecular</b> = bonds holding atoms together in a molecule (covalent).</li>
+          <li><b>Intermolecular</b> = attraction/repulsion between molecules (needed for gas/liquid/solid aggregates).</li>
+          <li><b>Van der Waals</b> = weak, distance-dependent, nonionic but involve charge fluctuations.</li>
+          <li><b>Hydrogen bond</b> = H attracted to strongly electronegative F, O, N — explains water's high dielectric constant, low vapor pressure, high boiling point.</li>
+        </ul>
+      </div>
+      <div class="ov-card laws">
+        <h3>📐 Gas Laws</h3>
+        <div class="formula-box">Boyle's: PV = k (const T)</div><br>
+        <div class="formula-box">Charles': V = kT (const P)</div><br>
+        <div class="formula-box">Combined: P₁V₁/T₁ = P₂V₂/T₂</div><br>
+        <div class="formula-box">Ideal gas: PV = nRT</div><br>
+        <div class="formula-box">M = gRT / PV</div>
+        <ul style="margin-top:10px;">
+          <li>R = 0.08205 L·atm/mol·K (or 8.314 J/mol·K)</li>
+          <li>0 °C = 273.15 K · 1 atm = 760 mmHg</li>
+        </ul>
+      </div>
+      <div class="ov-card" style="--accentColor:#C084FC;">
+        <h3>🌫️ Transitions</h3>
+        <ul>
+          <li><b>Sublimation</b>: solid → gas directly (iodine, camphor).</li>
+          <li><b>Deposition</b>: gas → solid directly (reverse of sublimation).</li>
+          <li>Heating a solid → atoms gain energy → disrupt lattice → liquid → eventually gas.</li>
+          <li><b>Real gas</b> ≈ ideal gas at <b>high T, low P</b> (particles have volume & interact in a real gas; ideal gas particles have no volume & no interactions).</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 2. DIAGRAMS ============ -->
+  <section class="panel" id="diagrams">
+    <h2 class="panel-title">Interactive Diagrams</h2>
+    <p class="panel-sub">Every figure, chart and table from the lecture — but you can click, drag and switch them.</p>
+
+    <div class="diag-grid">
+
+      <!-- Particle phase switcher -->
+      <div class="diag-card">
+        <h3>Particle Arrangement by Phase</h3>
+        <p class="hint">Tap a state to watch how particle packing and motion change.</p>
+        <div class="phase-switch">
+          <button data-p="solid" class="active">Solid</button>
+          <button data-p="liquid">Liquid</button>
+          <button data-p="gas">Gas</button>
+        </div>
+        <div class="stage" id="stage"></div>
+        <div class="phase-info" id="phaseInfo"></div>
+      </div>
+
+      <!-- Boyle's / Combined gas law simulator -->
+      <div class="diag-card">
+        <h3>Boyle's Law Simulator — P₁V₁/T₁ = P₂V₂/T₂</h3>
+        <p class="hint">Drag the sliders to change conditions and see the resulting volume plotted live.</p>
+        <div class="law-row">
+          <div class="law-controls">
+            <div class="slider-block">
+              <label>P₁ (mmHg) <span id="p1v">740</span></label>
+              <input type="range" id="p1" min="600" max="900" value="740">
+            </div>
+            <div class="slider-block">
+              <label>V₁ (mL) <span id="v1v">30.0</span></label>
+              <input type="range" id="v1" min="10" max="60" value="30" step="0.5">
+            </div>
+            <div class="slider-block">
+              <label>T₁ (K) <span id="t1v">293</span></label>
+              <input type="range" id="t1" min="250" max="350" value="293">
+            </div>
+            <div class="slider-block">
+              <label>P₂ (mmHg) <span id="p2v">760</span></label>
+              <input type="range" id="p2" min="600" max="900" value="760">
+            </div>
+            <div class="slider-block">
+              <label>T₂ (K) <span id="t2v">273</span></label>
+              <input type="range" id="t2" min="250" max="350" value="273">
+            </div>
+            <div class="readout" id="pvReadout">V₂ = 27.20 mL</div>
+          </div>
+          <div class="law-visual">
+            <canvas id="pvCanvas" width="400" height="220"></canvas>
+          </div>
+        </div>
+      </div>
+
+      <!-- Intermolecular energy curve -->
+      <div class="diag-card">
+        <h3>Net Intermolecular Energy vs Distance</h3>
+        <p class="hint">Hover the curve to see how attraction and repulsion balance at the equilibrium distance rₑ.</p>
+        <div class="energy-wrap">
+          <canvas id="energyCanvas" width="420" height="220"></canvas>
+          <div class="energy-legend">
+            <div><span class="swatch" style="background:#F87171"></span> Repulsion dominates at short range (particles pushed apart)</div>
+            <div><span class="swatch" style="background:#4ADE80"></span> Attraction dominates at mid range (Van der Waals / H-bond pull)</div>
+            <div><span class="swatch" style="background:#F2C14E"></span> rₑ — equilibrium distance, net energy minimum</div>
+            <div id="energyReadout" style="color:var(--gold);font-family:'JetBrains Mono',monospace;margin-top:10px;">move mouse over the curve →</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- IMF comparison table -->
+      <div class="diag-card">
+        <h3>Intermolecular Forces at a Glance</h3>
+        <p class="hint">Sortable-style reference — click a row to highlight it.</p>
+        <table class="imf" id="imfTable">
+          <thead><tr><th>Force</th><th>Relative strength</th><th>Nature</th><th>Example</th></tr></thead>
+          <tbody>
+            <tr><td>Intramolecular (covalent)</td><td>Strongest</td><td>Chemical bond within a molecule</td><td>O–H bond in water</td></tr>
+            <tr><td>Hydrogen bond</td><td>Strong</td><td>H attracted to F, O, or N of another molecule</td><td>H₂O···H₂O</td></tr>
+            <tr><td>Van der Waals</td><td>Weak, distance-dependent</td><td>Fluctuating charge–charge interaction</td><td>Noble gas liquefaction</td></tr>
+            <tr><td>Cohesion</td><td>Variable</td><td>Attraction between like molecules</td><td>Water molecules to each other</td></tr>
+            <tr><td>Adhesion</td><td>Variable</td><td>Attraction between unlike molecules</td><td>Water wetting glass</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ============ 3. MINI MAP ============ -->
+  <section class="panel" id="minimap">
+    <h2 class="panel-title">Mini Map</h2>
+    <p class="panel-sub">Click any topic on the left — its explanation appears right here, in the display pane.</p>
+
+    <div class="map-layout">
+      <div class="map-nodes" id="mapNodes"></div>
+      <div class="map-display" id="mapDisplay">
+        <p class="placeholder">Select a topic on the left to see it explained here.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 4. FLASHCARDS ============ -->
+  <section class="panel" id="flashcards">
+    <h2 class="panel-title">Flashcards</h2>
+    <p class="panel-sub">Tap a card to flip it. Covers every definition, law and fact in the lecture.</p>
+
+    <div class="fc-toolbar">
+      <div class="fc-progress" id="fcProgress">Card 1 / 20</div>
+      <div class="fc-btns">
+        <button id="fcShuffle">🔀 Shuffle</button>
+        <button id="fcPrev">← Prev</button>
+        <button id="fcNext" class="gold">Next →</button>
+      </div>
+    </div>
+
+    <div class="flashcard-stage">
+      <div class="flashcard" id="flashcard">
+        <div class="flashcard-inner">
+          <div class="fc-face fc-front">
+            <span class="lbl">Term</span>
+            <div class="content" id="fcFront"></div>
+            <span class="fc-tap">tap to flip</span>
+          </div>
+          <div class="fc-face fc-back">
+            <span class="lbl">Answer</span>
+            <div class="content" id="fcBack"></div>
+            <span class="fc-tap">tap to flip back</span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <p class="fc-deck-note">Deck of 20 cards, built from every definition and formula in the lecture.</p>
+  </section>
+
+  <!-- ============ 5. QUIZ BANK ============ -->
+  <section class="panel" id="quiz">
+    <h2 class="panel-title">Quiz Bank</h2>
+    <p class="panel-sub">30+ multiple-choice questions. Answer choices are shuffled every time you load or restart.</p>
+
+    <div class="quiz-toolbar">
+      <div class="quiz-score" id="quizScore">Score: 0 / 0</div>
+      <div class="fc-btns"><button id="quizRestart">🔁 Restart & Reshuffle</button></div>
+    </div>
+
+    <div class="quiz-list" id="quizList"></div>
+
+    <div class="quiz-footer">
+      <button id="quizFinish">Show Final Score</button>
+    </div>
+  </section>
+
+  <footer>
+    <div>Study Smart — built for focused revision.</div>
+    <div class="credit">© <b>Anmar Taha</b>. All rights reserved.</div>
+  </footer>
+
+</div>
+
+<script>
+/* ============ TAB NAVIGATION ============ */
+const tabBtns = document.querySelectorAll('.tab-btn');
+const panels = document.querySelectorAll('.panel');
+tabBtns.forEach(btn=>{
+  btn.addEventListener('click',()=>{
+    tabBtns.forEach(b=>b.classList.remove('active'));
+    panels.forEach(p=>p.classList.remove('active'));
+    btn.classList.add('active');
+    document.getElementById(btn.dataset.tab).classList.add('active');
+    if(btn.dataset.tab==='diagrams' && typeof rebuildDiagramsOnShow==='function'){
+      rebuildDiagramsOnShow();
+    }
+  });
+});
+
+/* ============ DIAGRAM 1: PHASE PARTICLE STAGE ============ */
+const stage = document.getElementById('stage');
+const phaseInfo = document.getElementById('phaseInfo');
+const phaseData = {
+  solid:{count:24,color:'#60A5FA',info:'<span><b>Packing:</b> tight lattice</span><span><b>Motion:</b> vibration only</span><span><b>Compressibility:</b> very low</span>'},
+  liquid:{count:18,color:'#2DD4BF',info:'<span><b>Packing:</b> close, disordered</span><span><b>Motion:</b> free flow, slower diffusion than gas</span><span><b>Compressibility:</b> low</span>'},
+  gas:{count:14,color:'#FB923C',info:'<span><b>Packing:</b> far apart</span><span><b>Motion:</b> fast, random, independent</span><span><b>Compressibility:</b> highest</span>'}
+};
+let currentPhase='solid';
+let animId;
+let particles=[];
+
+function buildParticles(phase){
+  stage.innerHTML='';
+  particles=[];
+  const d = phaseData[phase];
+  const W = stage.clientWidth, H = stage.clientHeight;
+  if(phase==='solid'){
+    const cols=6, rows=4, gapX=W/(cols+1), gapY=H/(rows+1);
+    for(let r=0;r<rows;r++){
+      for(let c=0;c<cols;c++){
+        const el=document.createElement('div');
+        el.className='particle';
+        el.style.background=`radial-gradient(circle at 30% 30%, #fff, ${d.color} 60%)`;
+        el.style.boxShadow=`0 0 8px ${d.color}88`;
+        const bx=(c+1)*gapX, by=(r+1)*gapY;
+        el.style.left=(bx-7)+'px'; el.style.top=(by-7)+'px';
+        stage.appendChild(el);
+        particles.push({el,bx,by,phase:'solid'});
+      }
+    }
+  } else {
+    for(let i=0;i<d.count;i++){
+      const el=document.createElement('div');
+      el.className='particle';
+      el.style.background=`radial-gradient(circle at 30% 30%, #fff, ${d.color} 60%)`;
+      el.style.boxShadow=`0 0 8px ${d.color}88`;
+      const x=Math.random()*(W-16), y=Math.random()*(H-16);
+      el.style.left=x+'px'; el.style.top=y+'px';
+      stage.appendChild(el);
+      const speed = phase==='gas' ? (1.6+Math.random()*2.2) : (0.4+Math.random()*0.5);
+      const angle = Math.random()*Math.PI*2;
+      particles.push({el,x,y,vx:Math.cos(angle)*speed,vy:Math.sin(angle)*speed,phase});
+    }
+  }
+  phaseInfo.innerHTML = d.info;
+}
+
+function animate(){
+  const W = stage.clientWidth, H = stage.clientHeight;
+  if(currentPhase==='solid'){
+    const t=Date.now()/300;
+    particles.forEach((p,i)=>{
+      const jx = Math.sin(t+i)*1.4, jy=Math.cos(t*1.3+i)*1.4;
+      p.el.style.left=(p.bx-7+jx)+'px';
+      p.el.style.top=(p.by-7+jy)+'px';
+    });
+  } else {
+    particles.forEach(p=>{
+      p.x+=p.vx; p.y+=p.vy;
+      if(p.x<0||p.x>W-14) p.vx*=-1;
+      if(p.y<0||p.y>H-14) p.vy*=-1;
+      p.x=Math.max(0,Math.min(W-14,p.x));
+      p.y=Math.max(0,Math.min(H-14,p.y));
+      p.el.style.left=p.x+'px';
+      p.el.style.top=p.y+'px';
+    });
+  }
+  animId = requestAnimationFrame(animate);
+}
+
+document.querySelectorAll('.phase-switch button').forEach(btn=>{
+  btn.addEventListener('click',()=>{
+    document.querySelectorAll('.phase-switch button').forEach(b=>b.classList.remove('active'));
+    btn.classList.add('active');
+    currentPhase = btn.dataset.p;
+    buildParticles(currentPhase);
+  });
+});
+buildParticles('solid');
+animate();
+
+/* ============ DIAGRAM 2: BOYLE / COMBINED GAS LAW ============ */
+const p1=document.getElementById('p1'), v1=document.getElementById('v1'), t1=document.getElementById('t1');
+const p2=document.getElementById('p2'), t2=document.getElementById('t2');
+const p1v=document.getElementById('p1v'), v1v=document.getElementById('v1v'), t1v=document.getElementById('t1v');
+const p2v=document.getElementById('p2v'), t2v=document.getElementById('t2v');
+const pvReadout=document.getElementById('pvReadout');
+const pvCanvas=document.getElementById('pvCanvas');
+const pvCtx=pvCanvas.getContext('2d');
+
+function drawPV(V1,V2){
+  const W=pvCanvas.width, H=pvCanvas.height;
+  pvCtx.clearRect(0,0,W,H);
+  pvCtx.fillStyle='#0F1B33';
+  pvCtx.fillRect(0,0,W,H);
+  const maxV = Math.max(V1,V2,10)*1.3;
+  const barW = 70, gap=90, baseY=H-30;
+  function bar(x,val,color,label){
+    const h = (val/maxV)*(H-60);
+    pvCtx.fillStyle=color;
+    pvCtx.fillRect(x, baseY-h, barW, h);
+    pvCtx.fillStyle='#E7ECF7';
+    pvCtx.font='12px Inter, sans-serif';
+    pvCtx.textAlign='center';
+    pvCtx.fillText(label, x+barW/2, baseY+18);
+    pvCtx.fillStyle='#F2C14E';
+    pvCtx.font='bold 13px JetBrains Mono, monospace';
+    pvCtx.fillText(val.toFixed(2)+' mL', x+barW/2, baseY-h-8);
+  }
+  bar(W/2-gap/2-barW, V1, '#60A5FA', 'V₁');
+  bar(W/2+gap/2, V2, '#2DD4BF', 'V₂');
+  pvCtx.strokeStyle='#26314f';
+  pvCtx.beginPath(); pvCtx.moveTo(0,baseY); pvCtx.lineTo(W,baseY); pvCtx.stroke();
+}
+
+function updatePV(){
+  const P1=+p1.value, V1=+v1.value, T1=+t1.value, P2=+p2.value, T2=+t2.value;
+  p1v.textContent=P1; v1v.textContent=V1.toFixed(1); t1v.textContent=T1; p2v.textContent=P2; t2v.textContent=T2;
+  const V2 = (P1*V1*T2)/(T1*P2);
+  pvReadout.textContent = `V₂ = ${V2.toFixed(2)} mL   (from P₁V₁/T₁ = P₂V₂/T₂)`;
+  drawPV(V1,V2);
+}
+[p1,v1,t1,p2,t2].forEach(inp=>inp.addEventListener('input',updatePV));
+updatePV();
+
+/* ============ DIAGRAM 3: ENERGY vs DISTANCE CURVE ============ */
+const eCanvas=document.getElementById('energyCanvas');
+const eCtx=eCanvas.getContext('2d');
+const energyReadout=document.getElementById('energyReadout');
+
+function drawEnergyCurve(){
+  const W=eCanvas.width,H=eCanvas.height;
+  eCtx.clearRect(0,0,W,H);
+  eCtx.fillStyle='#0F1B33'; eCtx.fillRect(0,0,W,H);
+  const originX=60, originY=H/2;
+  eCtx.strokeStyle='#3a4568'; eCtx.lineWidth=1;
+  eCtx.beginPath(); eCtx.moveTo(originX,10); eCtx.lineTo(originX,H-10); eCtx.stroke();
+  eCtx.beginPath(); eCtx.moveTo(20,originY); eCtx.lineTo(W-10,originY); eCtx.stroke();
+  eCtx.fillStyle='#8FA0C4'; eCtx.font='11px Inter, sans-serif';
+  eCtx.fillText('Energy', originX-45, 20);
+  eCtx.fillText('Distance →', W-90, originY-8);
+
+  // Lennard-Jones-like curve
+  eCtx.beginPath();
+  eCtx.lineWidth=2.5;
+  eCtx.strokeStyle='#F2C14E';
+  let first=true;
+  const points=[];
+  for(let px=originX+8; px<W-15; px+=2){
+    const r = (px-originX)/40 + 0.55;
+    const y = 4*( (0.6/Math.pow(r,12)) - (0.6/Math.pow(r,6)) );
+    const cy = originY - y*140;
+    points.push({px,cy,r});
+    if(first){eCtx.moveTo(px,cy);first=false;} else eCtx.lineTo(px,cy);
+  }
+  eCtx.stroke();
+
+  // mark equilibrium (minimum)
+  let minPt=points[0];
+  points.forEach(pt=>{ if(pt.cy>minPt.cy) minPt=pt; });
+  eCtx.fillStyle='#F2C14E';
+  eCtx.beginPath(); eCtx.arc(minPt.px,minPt.cy,4,0,Math.PI*2); eCtx.fill();
+  eCtx.strokeStyle='#5A6789'; eCtx.setLineDash([3,3]);
+  eCtx.beginPath(); eCtx.moveTo(minPt.px,minPt.cy); eCtx.lineTo(minPt.px,originY); eCtx.stroke();
+  eCtx.setLineDash([]);
+  eCtx.fillStyle='#F2C14E'; eCtx.font='12px JetBrains Mono, monospace';
+  eCtx.fillText('rₑ', minPt.px-6, originY+18);
+
+  eCanvas._points = points;
+}
+drawEnergyCurve();
+
+/* Diagrams tab starts hidden (display:none), so #stage reports 0x0 the first
+   time it's built. Re-run the layout-dependent pieces once the tab is actually shown. */
+function rebuildDiagramsOnShow(){
+  buildParticles(currentPhase);
+  drawEnergyCurve();
+}
+
+eCanvas.addEventListener('mousemove',(ev)=>{
+  const rect=eCanvas.getBoundingClientRect();
+  const scaleX = eCanvas.width/rect.width;
+  const mx = (ev.clientX-rect.left)*scaleX;
+  let closest=null,best=1e9;
+  (eCanvas._points||[]).forEach(pt=>{
+    const dist=Math.abs(pt.px-mx);
+    if(dist<best){best=dist;closest=pt;}
+  });
+  if(closest){
+    const zone = closest.cy > eCanvas.height/2 ? 'Attraction dominates (net negative energy)' : 'Repulsion dominates (net positive energy)';
+    energyReadout.textContent = zone;
+  }
+});
+
+/* ============ IMF TABLE ROW HIGHLIGHT ============ */
+document.querySelectorAll('#imfTable tbody tr').forEach(row=>{
+  row.style.cursor='pointer';
+  row.addEventListener('click',()=>{
+    document.querySelectorAll('#imfTable tbody tr').forEach(r=>r.style.background='');
+    row.style.background='var(--bg-card-hover)';
+  });
+});
+
+/* ============ MINI MAP ============ */
+const mapTopics = [
+  {group:'Matter Basics', items:[
+    {t:'What is Matter?', body:'Matter is anything that takes up space and can be weighed — it has volume and mass. In nature it exists as rigid solids, flowing liquids, or shapeless gases, depending on pressure and temperature.'},
+    {t:'Solid State', body:'Particles are tightly packed with tiny gaps, making solids hard to compress. Particles can only vibrate about a fixed mean position, giving a fixed shape and volume and a very low diffusion rate. Examples: solid ice, sugar, rock, wood.'},
+    {t:'Liquid State', body:'Particles are less tightly packed than in solids and can move, so liquids take the shape of their container while keeping a fixed volume. They are difficult to compress, diffuse faster than solids, and have weaker interparticle attraction. Examples: water, milk, blood, coffee.'},
+    {t:'Gas State', body:'Particles are far apart with negligible attractive force and move freely, so gases have neither fixed shape nor fixed volume. They are the most compressible state, diffuse fastest, and have the highest particle kinetic energy. Examples: air, helium, nitrogen, oxygen, carbon dioxide.'},
+  ]},
+  {group:'Binding Forces', items:[
+    {t:'Intermolecular vs Intramolecular', body:'Intramolecular forces are the chemical bonds holding atoms together inside a molecule (like covalent bonds). Intermolecular forces are the attractive/repulsive forces between molecules — these must exist for gases, liquids and solids to form aggregates at all.'},
+    {t:'Cohesion & Adhesion', body:'Cohesion is the attraction between like molecules (e.g., water molecules to each other). Adhesion is the attraction between unlike molecules (e.g., water to glass). Both are manifestations of intermolecular forces, balanced against repulsion for molecules to interact.'},
+    {t:'Van der Waals Forces', body:'Weak, nonionic but charge-dependent intermolecular forces. A transient shift in electron density around a nucleus creates a fluctuating dipole, which can induce a charge separation in a neighboring molecule — the resulting attraction is distance-dependent.'},
+    {t:'Hydrogen Bonds', body:'Formed when a hydrogen atom bonded to a strongly electronegative atom (F, O, or N) is attracted to another electronegative atom nearby. This electrostatic "hydrogen bridge" exists in ice and liquid water, explaining water’s high dielectric constant, low vapor pressure, and high boiling point.'},
+    {t:'Attraction–Repulsion Balance', body:'At short distances, repulsion dominates as electron clouds push apart; at longer distances, attractive forces (Van der Waals, hydrogen bonding) dominate. The net energy is lowest — most stable — at the equilibrium distance rₑ.'},
+  ]},
+  {group:'Phase Transitions', items:[
+    {t:'Melting → Vaporization Pathway', body:'As a solid is heated, atoms gain enough energy to disrupt the ordered lattice and become a liquid. With more energy, the liquid becomes a gas. Molecules, atoms and ions in the solid state are held close by intermolecular forces until this energy input breaks that order.'},
+    {t:'Sublimation & Deposition', body:'Solids with high vapor pressure (like iodine and camphor) can pass directly from solid to gas without melting — this is sublimation. The reverse process, gas condensing directly to a solid, is called deposition.'},
+  ]},
+  {group:'Gas Laws', items:[
+    {t:"Boyle's Law", body:"Relates the volume and pressure of a fixed mass of gas at constant temperature: P is proportional to 1/V, or PV = k. Increase pressure and volume drops proportionally, and vice versa."},
+    {t:'Law of Gay-Lussac & Charles', body:'States that the volume and absolute temperature of a fixed mass of gas at constant pressure are directly proportional: V ∝ T, or V = kT.'},
+    {t:'Combined Gas Law', body:'Combining Boyle’s and Charles’ laws gives P₁V₁/T₁ = P₂V₂/T₂ — useful for finding a new volume, pressure, or temperature when conditions change. Worked example: 30.0 mL at 740 mmHg and 20°C becomes 27.2 mL at 760 mmHg and 0°C.'},
+    {t:'Ideal Gas Equation', body:'PV/T is constant and equals R, the gas constant, so PV = RT for one mole, or PV = nRT for n moles. R = 0.08205 L·atm/mol·K when pressure is in atmospheres, or R = 8.314 J/mol·K when pressure is in dynes/cm².'},
+    {t:'Molecular Weight from Gas Law', body:'Replacing n with g/M (grams over molecular weight) in PV = nRT gives PV = (g/M)RT, rearranged to M = gRT/PV. Example: 0.30 g of ethyl alcohol vapor in 200 mL at 1 atm and 100°C gives M ≈ 46.0 g/mol.'},
+    {t:'Victor Meyer Method', body:'A practical method for determining molecular weight: the liquid is weighed in a glass bulb, vaporized, and its volume measured at a known temperature and barometric pressure. These values are substituted into the ideal gas equation to obtain the molecular weight.'},
+  ]},
+  {group:'Kinetic Theory', items:[
+    {t:'Kinetic Molecular Theory (4 postulates)', body:'1) Gas particle volume is negligible compared to the container (true at low P, high T). 2) Particles do not attract one another and move independently (low pressure). 3) Particles show continuous random motion from kinetic energy. 4) Collisions are perfectly elastic — no net energy or speed is lost.'},
+    {t:'Real Gas vs Ideal Gas', body:'Real gas particles have volume, lose some energy in collisions, and experience intermolecular forces. Ideal gas particles are assumed to have no volume, undergo perfectly elastic collisions, and have no interactions. Real gases behave most like ideal gases at high temperature and low pressure.'},
+  ]},
+];
+
+const mapNodesEl = document.getElementById('mapNodes');
+const mapDisplayEl = document.getElementById('mapDisplay');
+mapTopics.forEach(grp=>{
+  const label=document.createElement('div');
+  label.className='grp-label';
+  label.textContent=grp.group;
+  mapNodesEl.appendChild(label);
+  grp.items.forEach(item=>{
+    const btn=document.createElement('button');
+    btn.className='map-node';
+    btn.innerHTML=`<span class="b"></span>${item.t}`;
+    btn.addEventListener('click',()=>{
+      document.querySelectorAll('.map-node').forEach(n=>n.classList.remove('on'));
+      btn.classList.add('on');
+      mapDisplayEl.innerHTML = `<h4>${item.t}</h4><p>${item.body}</p>`;
+    });
+    mapNodesEl.appendChild(btn);
+  });
+});
+
+/* ============ FLASHCARDS ============ */
+const flashData = [
+  {f:'Definition of Matter', b:'Anything that takes up space and can be weighed — has both volume and mass.'},
+  {f:'States of matter — what determines them?', b:'Matter exists as rigid solids, flowing liquids, or shapeless gases depending on pressure and temperature.'},
+  {f:'Solid — particle packing', b:'Tightly/closely packed particles with only tiny gaps between them, making solids hard to compress.'},
+  {f:'Solid — motion of particles', b:'Particles can only vibrate about a fixed mean position; they cannot move independently.'},
+  {f:'Solid — shape and volume', b:'Fixed shape and fixed volume.'},
+  {f:'Solid — diffusion rate', b:'Very low diffusion rate — the lowest of the three states.'},
+  {f:'Solid — examples', b:'Ice, sugar, rock, wood.'},
+  {f:'Liquid — particle packing', b:'Less tightly packed than solids; particles can move past one another.'},
+  {f:'Liquid — key property', b:'Fixed volume but no fixed shape; takes the shape of its container.'},
+  {f:'Liquid — compressibility', b:'Difficult to compress.'},
+  {f:'Liquid — examples', b:'Water, milk, blood, coffee.'},
+  {f:'Gas — particle packing', b:'Particles are far apart with negligible attractive force between them.'},
+  {f:'Gas — key property', b:'Neither fixed volume nor fixed shape; highest compressibility of the three states.'},
+  {f:'Gas — diffusion & kinetic energy', b:'Highest diffusion rate and highest particle kinetic energy of the three states.'},
+  {f:'Gas — examples', b:'Air, helium, nitrogen, oxygen, carbon dioxide.'},
+  {f:'Rate of diffusion order', b:'Solids (lowest) < Liquids < Gases (highest).'},
+  {f:'Compressibility order', b:'Gases are the most compressible; liquids and solids are both difficult to compress.'},
+  {f:'Intramolecular forces', b:'Chemical bonds holding atoms together within a molecule (e.g., covalent bonds).'},
+  {f:'Intermolecular forces', b:'Attractive/repulsive forces between molecules of a substance — required for gases, liquids, and solids to exist as aggregates.'},
+  {f:'Cohesion', b:'Attraction between like molecules (e.g., water molecules to each other).'},
+  {f:'Adhesion', b:'Attraction between unlike molecules (e.g., water to glass).'},
+  {f:'Van der Waals forces', b:'Weak, nonionic but charge-dependent intermolecular forces arising from transient charge separation (fluctuating dipoles); strength depends on distance.'},
+  {f:'How Van der Waals attraction arises', b:'A transient shift in electron density creates a fluctuating dipole, which can induce charge separation in a neighboring molecule, producing attraction.'},
+  {f:'Hydrogen bond', b:'Electrostatic union between a hydrogen atom bonded to a strongly electronegative atom (F, O, N) and another nearby electronegative atom.'},
+  {f:'Effect of hydrogen bonding on water', b:'Explains water’s high dielectric constant, low vapor pressure, and high boiling point.'},
+  {f:'Attraction–repulsion balance', b:'At short distances repulsion dominates as electron clouds push apart; at longer distances attraction (Van der Waals/H-bonding) dominates.'},
+  {f:'Equilibrium distance rₑ', b:'The distance at which net intermolecular energy is at its minimum — attraction and repulsion are balanced, giving the most stable arrangement.'},
+  {f:'Energy curve — short range', b:'Repulsion dominates at short range, pushing particles apart (net positive energy).'},
+  {f:'Energy curve — mid range', b:'Attraction dominates at mid range from Van der Waals forces and hydrogen bonding (net negative energy).'},
+  {f:'Melting → vaporization pathway', b:'Heating a solid gives atoms enough energy to disrupt the lattice, forming a liquid; more energy input turns the liquid into a gas.'},
+  {f:'Sublimation', b:'Solid passes directly to gas without melting (e.g., iodine, camphor).'},
+  {f:'Deposition', b:'The reverse of sublimation — gas condenses directly to solid.'},
+  {f:'Substances that sublime at room temperature', b:'Iodine and camphor are common examples — they have high vapor pressure as solids.'},
+  {f:"Boyle's Law", b:'PV = k — volume and pressure of a fixed gas mass are inversely proportional at constant temperature.'},
+  {f:"Charles' / Gay-Lussac's Law", b:'V = kT — volume and absolute temperature of a fixed gas mass are directly proportional at constant pressure.'},
+  {f:'Combined Gas Law', b:'P₁V₁/T₁ = P₂V₂/T₂ — used to find a new volume, pressure, or temperature when gas conditions change.'},
+  {f:'Combined gas law — worked example', b:'30.0 mL of gas at 740 mmHg and 20°C becomes 27.2 mL when converted to 0°C and 760 mmHg.'},
+  {f:'Ideal Gas Equation', b:'PV = nRT, where R = 0.08205 L·atm/mol·K (or 8.314 J/mol·K).'},
+  {f:'Gas constant R — pressure in atmospheres', b:'R = 0.08205 L·atm/mol·K.'},
+  {f:'Gas constant R — pressure in dynes/cm²', b:'R = 8.314 joules/mol·K.'},
+  {f:'0 °C on the Kelvin scale', b:'273.15 K.'},
+  {f:'1 atmosphere in mmHg', b:'760 mmHg.'},
+  {f:'Molecular weight from gas law', b:'M = gRT / PV, derived by substituting n = g/M into PV = nRT.'},
+  {f:'Molecular weight derivation', b:'Replacing n with g/M (grams over molecular weight) in PV = nRT gives PV = (g/M)RT, which rearranges to M = gRT/PV.'},
+  {f:'Molecular weight — worked example', b:'0.30 g of ethyl alcohol vapor in 200 mL at 1 atm and 100°C gives a molecular weight of about 46.0 g/mol.'},
+  {f:'Victor Meyer Method', b:"Determines a liquid's molecular weight by weighing it, vaporizing it, and measuring the vapor's volume at known temperature and pressure, then substituting into the ideal gas equation."},
+  {f:'Kinetic Molecular Theory — postulate 1', b:'Gas particle volume is negligible compared to the container volume (true at low pressure, high temperature).'},
+  {f:'Kinetic Molecular Theory — postulate 2', b:'Gas particles do not attract one another and move independently (true at low pressure).'},
+  {f:'Kinetic Molecular Theory — postulate 3', b:'Gas particles show continuous random motion due to their kinetic energy.'},
+  {f:'Kinetic Molecular Theory — postulate 4', b:'Collisions between gas particles are perfectly elastic — no net energy or speed is lost.'},
+  {f:'Real gas particles vs ideal gas particles', b:'Real gas particles have measurable volume, experience intermolecular forces, and can lose some energy in collisions; ideal gas particles are assumed to have none of these.'},
+  {f:'When real gases behave like ideal gases', b:'At high temperature and low pressure, where particle volume and intermolecular attraction become negligible.'},
+  {f:'Intramolecular (covalent) bond strength', b:'The strongest of the binding forces listed — e.g., the O–H bond within a water molecule.'},
+  {f:'Hydrogen bond example', b:'H₂O···H₂O — hydrogen bonding between water molecules; classified as a strong intermolecular force.'},
+  {f:'Van der Waals example', b:'Responsible for the liquefaction of noble gases; classified as weak and distance-dependent.'},
+  {f:'Cohesion example', b:'Water molecules attracting each other.'},
+  {f:'Adhesion example', b:'Water wetting glass.'},
+];
+let fcOrder = flashData.map((_,i)=>i);
+let fcIndex = 0;
+const fcFront=document.getElementById('fcFront'), fcBack=document.getElementById('fcBack');
+const fcCard=document.getElementById('flashcard');
+const fcProgress=document.getElementById('fcProgress');
+
+function renderFC(){
+  const idx = fcOrder[fcIndex];
+  fcCard.classList.remove('flipped');
+  fcFront.textContent = flashData[idx].f;
+  fcBack.textContent = flashData[idx].b;
+  fcProgress.textContent = `Card ${fcIndex+1} / ${flashData.length}`;
+}
+fcCard.addEventListener('click',()=>fcCard.classList.toggle('flipped'));
+document.getElementById('fcNext').addEventListener('click',()=>{ fcIndex=(fcIndex+1)%flashData.length; renderFC(); });
+document.getElementById('fcPrev').addEventListener('click',()=>{ fcIndex=(fcIndex-1+flashData.length)%flashData.length; renderFC(); });
+document.getElementById('fcShuffle').addEventListener('click',()=>{
+  for(let i=fcOrder.length-1;i>0;i--){ const j=Math.floor(Math.random()*(i+1)); [fcOrder[i],fcOrder[j]]=[fcOrder[j],fcOrder[i]]; }
+  fcIndex=0; renderFC();
+});
+renderFC();
+
+/* ============ QUIZ BANK ============ */
+const quizData = [
+  {q:'What is matter, by definition?', correct:'Anything that takes up space and can be weighed', wrong:['Anything that is visible to the human eye','Only substances that flow','Only substances with a fixed shape']},
+  {q:'Which property describes particles in the solid state?', correct:'Tightly packed, only able to vibrate about a fixed position', wrong:['Free to move independently over long distances','Far apart with negligible attraction','Loosely packed but flowing']},
+  {q:'Which state of matter has a fixed volume but no fixed shape?', correct:'Liquid', wrong:['Solid','Gas','Plasma']},
+  {q:'Which state of matter has neither a fixed shape nor a fixed volume?', correct:'Gas', wrong:['Solid','Liquid','Crystalline solid']},
+  {q:'Rank diffusion rate from lowest to highest.', correct:'Solid < Liquid < Gas', wrong:['Gas < Liquid < Solid','Liquid < Solid < Gas','All diffuse at the same rate']},
+  {q:'Which state of matter is the most compressible?', correct:'Gas', wrong:['Solid','Liquid','None are compressible']},
+  {q:'Intramolecular forces refer to:', correct:'Chemical bonds holding atoms together within a molecule', wrong:['Attraction between separate molecules','Attraction between a molecule and its container','Forces only present in gases']},
+  {q:'Intermolecular forces refer to:', correct:'Attractive and repulsive forces between molecules of a substance', wrong:['Bonds within a single atom','Only forces found in solids','Forces that hold protons and neutrons together']},
+  {q:'Cohesion is defined as:', correct:'Attraction between like molecules', wrong:['Attraction between unlike molecules','Repulsion between identical molecules','A type of covalent bond']},
+  {q:'Adhesion is defined as:', correct:'Attraction between unlike molecules', wrong:['Attraction between like molecules','A synonym for cohesion','A property only gases have']},
+  {q:'Van der Waals forces are best described as:', correct:'Weak, nonionic intermolecular forces dependent on distance', wrong:['Strong ionic bonds between atoms','Forces found only in solids','Permanent covalent bonds']},
+  {q:'A hydrogen bond forms between a hydrogen atom and which type of atom?', correct:'A strongly electronegative atom such as F, O, or N', wrong:['Any carbon atom','A noble gas atom','Another hydrogen atom only']},
+  {q:'Which property of water is explained by hydrogen bonding?', correct:'High boiling point, low vapor pressure, high dielectric constant', wrong:['Low boiling point only','Complete lack of polarity','Inability to dissolve ionic compounds']},
+  {q:'Sublimation is the process where:', correct:'A solid passes directly into a gas without melting', wrong:['A gas condenses directly into a solid','A liquid evaporates into a gas','A solid melts into a liquid']},
+  {q:'Deposition is the process where:', correct:'A gas condenses directly into a solid', wrong:['A solid sublimes into a gas','A liquid freezes into a solid','A gas expands at constant pressure']},
+  {q:'Which substances are commonly cited examples of sublimation at room temperature?', correct:'Iodine and camphor', wrong:['Water and ethanol','Sugar and salt','Oxygen and nitrogen']},
+  {q:"Boyle's Law states that at constant temperature:", correct:'Pressure is inversely proportional to volume (PV = k)', wrong:['Pressure is directly proportional to volume','Volume is directly proportional to temperature','Pressure is unrelated to volume']},
+  {q:"The law of Gay-Lussac and Charles states that at constant pressure:", correct:'Volume is directly proportional to absolute temperature', wrong:['Volume is inversely proportional to temperature','Pressure is directly proportional to volume','Temperature has no effect on volume']},
+  {q:'The combined gas law is written as:', correct:'P₁V₁/T₁ = P₂V₂/T₂', wrong:['P₁/V₁ = P₂/V₂','P₁V₁T₁ = P₂V₂T₂','V₁/P₁T₁ = V₂/P₂T₂']},
+  {q:'The ideal gas equation for n moles is:', correct:'PV = nRT', wrong:['PV = nR/T','PV = n + RT','P = nRTV']},
+  {q:'What is the value of the gas constant R when pressure is in atmospheres?', correct:'0.08205 L·atm/mol·K', wrong:['8.314 L·atm/mol·K','1.987 L·atm/mol·K','22.4 L·atm/mol·K']},
+  {q:'What is the value of R when pressure is expressed in dynes/cm²?', correct:'8.314 joules/mol·K', wrong:['0.08205 joules/mol·K','1 joule/mol·K','760 joules/mol·K']},
+  {q:'0 °C on the absolute (Kelvin) scale equals:', correct:'273.15 K', wrong:['0 K','100 K','373 K']},
+  {q:'1 atmosphere of pressure equals how many mmHg?', correct:'760 mmHg', wrong:['100 mmHg','1000 mmHg','740 mmHg']},
+  {q:'The molecular weight of a gas can be found using the formula:', correct:'M = gRT / PV', wrong:['M = PV / gRT','M = PVRT / g','M = g / PVRT']},
+  {q:'In the ideal gas law, replacing n with g/M gives which equation?', correct:'PV = (g/M)RT', wrong:['PV = (M/g)RT','PV = gMRT','PV = RT/(gM)']},
+  {q:'The Victor Meyer method is used to determine:', correct:"A liquid's molecular weight from its vapor volume, temperature, and pressure", wrong:['The boiling point of a solid','The pH of a solution','The density of a crystal lattice']},
+  {q:'According to Kinetic Molecular Theory, gas particle volume is considered negligible under which conditions?', correct:'Low pressure and high temperature', wrong:['High pressure and low temperature','High pressure and high temperature','Any pressure and temperature']},
+  {q:'According to Kinetic Molecular Theory, collisions between gas particles are assumed to be:', correct:'Perfectly elastic, with no net loss of energy', wrong:['Perfectly inelastic, losing all kinetic energy','Random in elasticity','Impossible, since particles never collide']},
+  {q:'Compared to an ideal gas, particles of a real gas:', correct:'Have measurable volume and experience intermolecular forces', wrong:['Have zero volume and never interact','Only exist at absolute zero','Cannot be compressed at all']},
+  {q:'Real gases behave most like ideal gases under which conditions?', correct:'High temperature and low pressure', wrong:['Low temperature and high pressure','Low temperature and low pressure','High temperature and high pressure']},
+  {q:'At the equilibrium distance rₑ on the intermolecular energy curve, the net energy is:', correct:'At its minimum, where attraction and repulsion are balanced', wrong:['At its maximum','Equal to zero at all distances','Undefined']},
+  {q:'A gas burette collects nitric oxide at 30.0 mL, 740 mmHg, 20°C. What is the volume at 0°C and 760 mmHg?', correct:'27.2 mL', wrong:['30.0 mL','32.5 mL','25.0 mL']},
+  {q:'What determines whether matter exists as a solid, liquid, or gas?', correct:'Pressure and temperature', wrong:['Color and density only','Molecular weight alone','The container shape only']},
+  {q:'Which of these is NOT a typical example of a solid?', correct:'Coffee', wrong:['Ice','Sugar','Rock']},
+  {q:'Which of these is a typical example of a liquid?', correct:'Blood', wrong:['Helium','Rock','Wood']},
+  {q:'Which of these is a typical example of a gas?', correct:'Helium', wrong:['Milk','Sugar','Wood']},
+  {q:'Compared to solids and gases, how compressible are liquids?', correct:'Difficult to compress', wrong:['Easiest of the three to compress','Impossible to compress under any condition','Equally compressible as gases']},
+  {q:'What best describes particle motion in a solid?', correct:'Vibration about a fixed mean position only', wrong:['Free independent movement over long distances','Continuous random motion with elastic collisions','No motion of any kind, even vibration']},
+  {q:'Why are gases the most compressible state of matter?', correct:'Their particles are far apart with large gaps between them', wrong:['Their particles are tightly packed','Their particles are chemically bonded','Their particles have no kinetic energy']},
+  {q:'Which best defines intermolecular forces?', correct:'Forces of attraction and repulsion between molecules of a substance', wrong:['Bonds that hold atoms together within a single molecule', 'Forces found only inside atomic nuclei','Forces that exist only in solids']},
+  {q:'An O–H covalent bond within a single water molecule is an example of which type of force?', correct:'Intramolecular force', wrong:['Intermolecular force','Van der Waals force','Adhesion']},
+  {q:'Water molecules attracting other water molecules is an example of:', correct:'Cohesion', wrong:['Adhesion','Deposition','Sublimation']},
+  {q:'Water wetting the surface of a glass is an example of:', correct:'Adhesion', wrong:['Cohesion','Sublimation','Intramolecular bonding']},
+  {q:'What causes the attraction in Van der Waals forces?', correct:'A transient fluctuating dipole inducing charge separation in a neighboring molecule', wrong:['Permanent full charges on ions','Covalent electron sharing','Nuclear attraction between protons']},
+  {q:'On the ranking of intermolecular force strength given in the lecture, which is strongest?', correct:'Intramolecular (covalent) bonds', wrong:['Van der Waals forces','Hydrogen bonds','Adhesion']},
+  {q:'Which force is responsible for the liquefaction of noble gases?', correct:'Van der Waals forces', wrong:['Hydrogen bonding','Covalent bonding','Ionic bonding']},
+  {q:'At very short distances between two molecules, which force dominates?', correct:'Repulsion, as electron clouds push apart', wrong:['Attraction, pulling molecules closer','Gravitational force','No force acts at short distances']},
+  {q:'What happens to net intermolecular energy at the equilibrium distance rₑ?', correct:'It reaches its minimum value, the most stable point', wrong:['It reaches its maximum value','It becomes exactly zero','It becomes undefined']},
+  {q:'What must happen for a solid to become a liquid, according to the lecture?', correct:'Atoms gain enough energy to disrupt the ordered lattice', wrong:['Atoms lose all their kinetic energy','Pressure must drop to zero','Intermolecular forces must become infinite']},
+  {q:'Which pair correctly matches a phase change with its description?', correct:'Sublimation: solid → gas directly', wrong:['Sublimation: gas → solid directly','Deposition: solid → liquid directly','Deposition: liquid → gas directly']},
+  {q:"Boyle's Law relates which two variables at constant temperature?", correct:'Pressure and volume', wrong:['Volume and temperature','Pressure and temperature','Moles and temperature']},
+  {q:"Charles' (Gay-Lussac's) Law relates which two variables at constant pressure?", correct:'Volume and absolute temperature', wrong:['Pressure and volume','Moles and pressure','Volume and moles']},
+  {q:'In the combined gas law worked example, what was the initial temperature before conversion?', correct:'20°C', wrong:['0°C','100°C','273°C']},
+  {q:'In the combined gas law worked example, what was the initial pressure?', correct:'740 mmHg', wrong:['760 mmHg','700 mmHg','800 mmHg']},
+  {q:'In the molecular weight worked example, what mass of ethyl alcohol vapor was used?', correct:'0.30 g', wrong:['3.0 g','0.030 g','30 g']},
+  {q:'In the molecular weight worked example, what was the approximate resulting molecular weight?', correct:'≈ 46.0 g/mol', wrong:['≈ 18.0 g/mol','≈ 92.0 g/mol','≈ 12.0 g/mol']},
+  {q:'The Victor Meyer method determines molecular weight by measuring which quantities?', correct:"A liquid's mass, its vapor volume, temperature, and pressure", wrong:['Only the boiling point of the liquid','Only the color change of an indicator','Only the density of the solid residue']},
+  {q:'According to Kinetic Molecular Theory, how are collisions between gas particles described?', correct:'Continuous, random, and perfectly elastic', wrong:['Rare and perfectly inelastic','Fixed and non-random','Nonexistent at any pressure']},
+  {q:'Which condition makes the assumption that gas particles have negligible volume most valid?', correct:'Low pressure and high temperature', wrong:['High pressure and low temperature','High pressure and high temperature','Any pressure or temperature equally']},
+  {q:'What key assumption differs between real gas particles and ideal gas particles?', correct:'Real gas particles have measurable volume and intermolecular forces; ideal gas particles do not', wrong:['Ideal gas particles are heavier than real gas particles','Real gas particles never move','Ideal gases only exist below 0 K']},
+  {q:'Hydrogen bonding contributes to which properties of water?', correct:'High dielectric constant, low vapor pressure, and high boiling point', wrong:['Low dielectric constant and high vapor pressure only','Zero boiling point','Complete absence of intermolecular attraction']},
+  {q:'Which elements typically participate in hydrogen bonding with hydrogen?', correct:'Fluorine, oxygen, and nitrogen', wrong:['Carbon, sulfur, and phosphorus','Only oxygen','Any element in the periodic table']},
+];
+
+let quizShuffled = [];
+let quizAnswered = [];
+let quizScoreVal = 0;
+
+function shuffleArr(arr){
+  const a=[...arr];
+  for(let i=a.length-1;i>0;i--){ const j=Math.floor(Math.random()*(i+1)); [a[i],a[j]]=[a[j],a[i]]; }
+  return a;
+}
+
+function buildQuiz(){
+  quizScoreVal=0;
+  quizAnswered = new Array(quizData.length).fill(false);
+  quizShuffled = quizData.map(item=>{
+    const opts = shuffleArr([item.correct,...item.wrong]);
+    return {q:item.q, correct:item.correct, opts};
+  });
+  const listEl = document.getElementById('quizList');
+  listEl.innerHTML='';
+  quizShuffled.forEach((item,qi)=>{
+    const card=document.createElement('div');
+    card.className='q-card';
+    const head=document.createElement('div');
+    head.className='q-head';
+    head.innerHTML = `<div class="q-num">Q${qi+1}</div><div class="q-text">${item.q}</div>`;
+    card.appendChild(head);
+    const optsWrap=document.createElement('div');
+    optsWrap.className='q-opts';
+    item.opts.forEach(optText=>{
+      const opt=document.createElement('div');
+      opt.className='q-opt';
+      opt.innerHTML = `<span class="mark"></span><span>${optText}</span>`;
+      opt.addEventListener('click',()=>{
+        if(quizAnswered[qi]) return;
+        quizAnswered[qi]=true;
+        const isCorrect = optText===item.correct;
+        if(isCorrect) quizScoreVal++;
+        optsWrap.querySelectorAll('.q-opt').forEach(o=>{
+          o.classList.add('disabled');
+          const txt=o.querySelector('span:last-child').textContent;
+          if(txt===item.correct) o.classList.add('correct');
+        });
+        if(!isCorrect) opt.classList.add('wrong');
+        updateScore();
+      });
+      optsWrap.appendChild(opt);
+    });
+    card.appendChild(optsWrap);
+    listEl.appendChild(card);
+  });
+  updateScore();
+}
+
+function updateScore(){
+  const answeredCount = quizAnswered.filter(Boolean).length;
+  document.getElementById('quizScore').textContent = `Score: ${quizScoreVal} / ${answeredCount}`;
+}
+
+document.getElementById('quizRestart').addEventListener('click', buildQuiz);
+document.getElementById('quizFinish').addEventListener('click', ()=>{
+  const total = quizData.length;
+  const answered = quizAnswered.filter(Boolean).length;
+  alert(`You answered ${answered} of ${total} questions.\\nFinal score: ${quizScoreVal} / ${answered}`);
+});
+
+buildQuiz();
+</script>
+</body>
+</html>
